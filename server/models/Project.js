@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
-const { create } = require('./User');
 
-const ProjectSchema=new mongoose.Schema({
-  title:String,
-  description:String,
-  github:String,
-  demo:String,
-  techStack:[String],
-  image:String,
-  createdAt:{
-    type:Date,
+const ProjectSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  techStack: { type: [String], default: [] },
+  liveUrl: { type: String },
+  githubUrl: { type: String },
+  image: { type: String },
+  createdAt: {
+    type: Date,
     default: Date.now,
   },
 });
 
-module.exports=mongoose.model('Project',ProjectSchema);
+module.exports = mongoose.model('Project', ProjectSchema);

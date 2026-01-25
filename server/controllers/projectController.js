@@ -25,23 +25,38 @@ exports.getProject = async function(req, res) {
 
 // create project
 
-exports.createProject=async(req,res)=>{
-  try{
-    const {title, description, github, demo, techStack, image} = req.body;
-    if(!title || !description || !github || !demo || !techStack || !image){
+exports.createProject = async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      githubUrl,
+      liveUrl,
+      techStack,
+      image,
+      // Backwards-compat fields (optional)
+      github,
+      demo,
+    } = req.body;
+
+    const finalGithubUrl = githubUrl || github;
+    const finalLiveUrl = liveUrl || demo;
+
+    if (!title || !description || !finalGithubUrl || !finalLiveUrl || !techStack || !image) {
       return res.status(400).json({
         message: "All fields are required"
       });
     }
-    const newProject=new Project({
+    const newProject = new Project({
       title,
       description,
-      github,
-      demo,
+      githubUrl: finalGithubUrl,
+      liveUrl: finalLiveUrl,
       techStack,
       image,
       createdAt: new Date(),
-    })
+    });
+
     await newProject.save();
     return res.status(201).json({
       message: "Project created successfully",
@@ -49,15 +64,14 @@ exports.createProject=async(req,res)=>{
         id: newProject._id,
         title: newProject.title,
         description: newProject.description,
-        github: newProject.github,
-        demo: newProject.demo,
+        githubUrl: newProject.githubUrl,
+        liveUrl: newProject.liveUrl,
         techStack: newProject.techStack,
         image: newProject.image,
-        createdAt: newProject.createdAt
+        createdAt: newProject.createdAt,
       }
-    })
-  }
-  catch(error){
+    });
+  } catch (error) {
     console.error("Error creating project:", error);
     return res.status(500).json({
       message: "Internal server error"
@@ -66,23 +80,40 @@ exports.createProject=async(req,res)=>{
 }
 //update project
 
-exports.updateProject=async(req,res)=>{
-  try{
-    const {id}= req.params;
-    const {title, description, github, demo, techStack, image} = req.body
-    if(!title || !description || !github || !demo || !techStack || !image){
+exports.updateProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      title,
+      description,
+      githubUrl,
+      liveUrl,
+      techStack,
+      image,
+      github,
+      demo,
+    } = req.body;
+
+    const finalGithubUrl = githubUrl || github;
+    const finalLiveUrl = liveUrl || demo;
+
+    if (!title || !description || !finalGithubUrl || !finalLiveUrl || !techStack || !image) {
       return res.status(400).json({
         message: "All fields are required"
       });
     }
-    const project=await Project.findByIdAndUpdate(id, {
-      title,
-      description,
-      github,
-      demo,
-      techStack,
-      image
-    }, {new: true});
+    const project = await Project.findByIdAndUpdate(
+      id,
+      {
+        title,
+        description,
+        githubUrl: finalGithubUrl,
+        liveUrl: finalLiveUrl,
+        techStack,
+        image,
+      },
+      { new: true }
+    );
     if(!project){
       return res.status(404).json({
         message: "Project not found"
@@ -94,16 +125,16 @@ exports.updateProject=async(req,res)=>{
         id: project._id,
         title: project.title,
         description: project.description,
-        github: project.github,
-        demo: project.demo,
+        githubUrl: project.githubUrl,
+        liveUrl: project.liveUrl,
         techStack: project.techStack,
         image: project.image,
-        createdAt: project.createdAt
+        createdAt: project.createdAt,
       }
     });
 
   }
-  catch(error){
+  catch (error) {
     console.error("Error updating project:", error);
     return res.status(500).json({
       message: "Internal server error"
@@ -112,10 +143,10 @@ exports.updateProject=async(req,res)=>{
 }
 //delete project
 
-exports.deleteProject=async(req,res)=>{
-  try{
-    const {id}=req.params;
-    const project=await Project.findByIdAndDelete(id);
+exports.deleteProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = await Project.findByIdAndDelete(id);
     if(!project){
       return res.status(404).json({
         message: "Project not found"
