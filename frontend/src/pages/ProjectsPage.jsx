@@ -4,7 +4,7 @@ import { ProjectsSection } from '../organisms/ProjectsSection.jsx';
 import Particles from '../ui/Particles.jsx';
 
 export const ProjectsPage = () => (
-  <div className="relative flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-50">
+  <div className="relative flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-50 w-full overflow-x-hidden">
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
       <Particles
         particleColors={["#ffffff"]}

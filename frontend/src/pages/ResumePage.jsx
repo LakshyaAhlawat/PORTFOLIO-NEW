@@ -11,7 +11,7 @@ export const ResumePage = () => {
   const { resume } = useResume();
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-50">
+    <div className="flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-50 w-full overflow-x-hidden">
       <SiteHeader />
       <main className="flex-1">
         <ResumeSection />

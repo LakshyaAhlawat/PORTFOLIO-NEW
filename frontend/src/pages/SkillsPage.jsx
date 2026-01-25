@@ -33,7 +33,7 @@ const cardVariants = {
 
 
 export const SkillsPage = () => (
-  <div className="relative flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-50 overflow-x-hidden">
+  <div className="relative flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-50 w-full overflow-x-hidden">
     {/* Floating ReactBits Logo Loop animation */}
     <div className="fixed top-8 right-8 z-30 opacity-80 pointer-events-none select-none">
       <LogoLoop style={{ filter: 'drop-shadow(0 4px 24px #60a5fa44)' }} />
