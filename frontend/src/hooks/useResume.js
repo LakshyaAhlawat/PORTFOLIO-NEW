@@ -6,16 +6,24 @@ export const useResume = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const MIN_SPINNER_TIME = 800; // ms
+
   const load = async () => {
     setLoading(true);
     setError(null);
+    const start = Date.now();
     try {
       const resume = await fetchResume();
       setData(resume);
     } catch (err) {
       setError(err);
     } finally {
-      setLoading(false);
+      const elapsed = Date.now() - start;
+      if (elapsed < MIN_SPINNER_TIME) {
+        setTimeout(() => setLoading(false), MIN_SPINNER_TIME - elapsed);
+      } else {
+        setLoading(false);
+      }
     }
   };
 

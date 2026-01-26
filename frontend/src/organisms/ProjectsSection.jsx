@@ -3,7 +3,7 @@ import { Section } from '../atoms/Section.jsx';
 import { Heading } from '../atoms/Heading.jsx';
 import { Text } from '../atoms/Text.jsx';
 import { useProjects } from '../hooks/useProjects.js';
-
+import Spinner from '../components/spinner.jsx';
 export const ProjectsSection = () => {
   const { projects, loading } = useProjects();
 
@@ -12,7 +12,7 @@ export const ProjectsSection = () => {
       <div className="space-y-6">
         <Heading level={2}>Projects</Heading>
         <Text>A selection of work that showcases how I build.</Text>
-        {loading && <Text>Loading projects, please wait…</Text>}
+        {loading && <Spinner />}
 
         <div className="mt-6 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, idx) => (

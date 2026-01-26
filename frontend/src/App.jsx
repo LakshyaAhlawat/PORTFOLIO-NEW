@@ -10,6 +10,7 @@ import { LoginPage } from './pages/LoginPage.jsx';
 import { SignupPage } from './pages/SignupPage.jsx';
 import { NotFoundPage } from './pages/NotFoundPage.jsx';
 import { useAuth } from './hooks/useAuth.js';
+import RouteChangeSpinner from './components/RouteChangeSpinner.jsx';
 
 const ProtectedAdminRoute = ({ children }) => {
   const { user, isAdmin } = useAuth();
@@ -26,6 +27,7 @@ const ProtectedAdminRoute = ({ children }) => {
 function App() {
   return (
     <div className="min-h-screen bg-white text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-50 overflow-x-hidden">
+      <RouteChangeSpinner />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
