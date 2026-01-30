@@ -68,15 +68,31 @@ export const AdminDashboardPage = () => {
     }
   };
 
+
+  // Show confirm dialog and store the action to run on confirm
   const showConfirm = ({ title, message, action }) => {
     setConfirmState({ open: true, title, message, action });
   };
 
+  // Close confirm dialog
   const closeConfirm = () => setConfirmState({ open: false, title: '', message: '', action: null });
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-50">
       <SiteHeader />
+      {/* ConfirmDialog for all destructive actions */}
+      <ConfirmDialog
+        open={confirmState.open}
+        title={confirmState.title}
+        message={confirmState.message}
+        onConfirm={async () => {
+          if (typeof confirmState.action === 'function') {
+            await confirmState.action();
+          }
+          closeConfirm();
+        }}
+        onCancel={closeConfirm}
+      />
       <main className="flex-1 py-10">
         <Section>
           <div className="mb-6 flex items-center justify-between">
